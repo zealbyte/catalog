@@ -1,1 +1,4 @@
-This is the Readme
+ZealByte Catalog
+==========
+
+Visual data abstraction.
