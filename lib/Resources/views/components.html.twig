@@ -1,0 +1,79 @@
+{% block data_table_search_widget %}
+	{{ form_widget(form.value) }}
+	{{ form_widget(form.regex) }}
+{% endblock %}
+
+{% block data_table_filter_rows %}
+	{% for child in form %}
+		{{ form_widget(child) }}
+	{% endfor %}
+{% endblock %}
+
+
+{% block data_table_filter_widget %}
+	{{ block('data_table_filter_rows') }}
+{% endblock %}
+
+
+{% block data_table_column_rows %}
+	{% for child in form %}
+		{{ form_row(child) }}
+	{% endfor %}
+{% endblock %}
+
+
+{% block data_table_column_widget %}
+		{{ block('data_table_column_rows') }}
+{% endblock %}
+
+
+{% block data_table_column_collection_rows %}
+	{% set attr = attr|merge({class: (attr.class|default('') ~ ' data_table_columns ')|trim}) %}
+	<div {{ block('widget_attributes') }}>
+		{% for child in form %}
+			{{ form_widget(child) }}
+		{% endfor %}
+	</div>
+{% endblock %}
+
+
+{% block data_table_column_collection_widget %}
+	{{ block('data_table_column_collection_rows') }}
+{% endblock %}
+
+
+{% block data_table_rows %}
+	{% for child in form %}
+		{{ form_widget(child) }}
+	{% endfor %}
+{% endblock %}
+
+
+{% block data_table_widget %}
+	<div style="display:none;">
+		<div class="dt-form">
+			{{ block('data_table_rows') }}
+		</div>
+	</div>
+
+	{% if spec is defined %}
+		<script type="text/json">
+			{{ datatable_columns(spec)|json_encode|raw }}
+		</script>
+	{% endif %}
+
+	<table class="uk-table uk-table-hover"></table>
+{% endblock %}
+
+
+{% block datatable_component %}
+	{% package 'catalog' %}
+
+	<div class="data_table">
+		{% if form is defined %}
+			{% form_theme form _self %}
+			{{ form(form) }}
+		{% endif %}
+	</div>
+{% endblock datatable_component %}
+
